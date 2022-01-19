@@ -1,0 +1,68 @@
+
+<h1>User info</h1>
+
+ <%= image_tag @user.get_profile_image("100x100") %>
+
+<div>
+  <tr></tr>
+  <table class="table">
+    <tbody>
+      <tr>
+        <th><h3>Name</h3></th>
+        <th><h3><%= @user.name %></h3></th>
+      </tr>
+
+      <tr>
+      <th><h3>Introduction</h3></th>
+      <th><h3><%= @user.introduction %></h3></th>
+      <th> </th>
+      <tr>
+    </tbody>
+  </table>
+
+  <% if @user ==  current_user %>
+    <p><%= link_to "プロフィール編集", edit_user_path(@user) %></p>
+  <% end %>
+
+</div>
+
+
+<h1>New book</h1>
+  <%= form_with model: @book, local:true do |f| %>
+
+
+    <h4>Title</h4>
+      <%= f.text_field :title %>
+    <h4>Opinion</h4>
+      <%= f.text_area :body %><br>
+    <%= f.submit 'Create Box' %>
+  <% end %>
+
+
+
+
+<h1>Books</h1>
+
+<table class="table  table-hover table-inverse">
+<thead>
+    <tr>
+      <th></th>
+        <th><p>Title</p></th>
+        <th><p>Opinion</p></th>
+        <th colspan="3"></th>
+    </tr>
+</thead>
+
+<% @books.each do |book| %>
+
+
+  <tbody>
+    <tr>
+        <td><%= image_tag book.user.get_profile_image("100x100") %> </td>
+        <td> <span><%= link_to book.title,book_path(book.id) %></span> </td>
+        <td><%= book.body %></td>
+        <% end %>
+    </tr>
+  </tbody>
+</table>
+
