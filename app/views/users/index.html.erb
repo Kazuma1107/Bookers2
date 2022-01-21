@@ -1,53 +1,42 @@
-<h1>User info</h1>
 
- <%= image_tag @user.get_profile_image("100x100") %>
+<div class="container pt-3 pb-5">
+  <div class="row">
+    <div class="col-md-3 pr-1">
+      <%= render "books/error_message" %>
+      <%= render "users/userinfo",user:@user %>
+      <%= render "books/booksubmit",book:@book %>
+    </div>
 
-<div>
-  <tr></tr>
-  <table class="table">
-    <tbody>
-      <tr>
-        <th><h3>Name</h3></th>
-        <th><h3><%= @user.name %></h3></th>
-      </tr>
-
-      <tr>
-      <th><h3>Introduction</h3></th>
-      <h3><%= @user.introduction %></h3>
-      <th> </th>
-      <tr>
-    </tbody>
-  </table>
-
-  <% if @user ==  current_user %>
-    <p><%= link_to "プロフィール編集", edit_user_path(@user) %></p>
-  <% end %>
-
+    <div class="col-md-8 offset-md-1">
+      <h2>Users</h2>
+      <table class="table table-resposive">
+        <thead>
+          <tr>
+            <th>image</th>
+            <th>name</th>
+            <th></th>
+          </tr>
+        </thead>
+        <% @users.each do |user| %>
+          <tbody>
+            <tr>
+              <td>
+                <% if user.profile_image.attached? %>
+                  <%= image_tag user.profile_image, size: "60x60" %>
+                 <% else %>
+                  <%= image_tag 'no_image', size: "40x40" %>
+                <% end %>
+              </td>
+              <td>
+                <%= user.name %>
+              </td>
+              <td>
+                <%= link_to "Show",user_path(user.id) %>
+              </td>
+            </tr>
+          </tbody>
+        <% end %>
+      </table>
+    </div>
+  </div>
 </div>
-
-
-<h1>Books</h1>
-
-<table class="table">
-<thead>
-    <tr>
-      <th></th>
-        <th><p>Image</p></th>
-        <th><p>Name</p></th>
-        <th colspan="3"></th>
-    </tr>
-</thead>
-<tbody>
-<% @users.each do |user| %>
-
-
-  
-    <tr>
-        <td><%= image_tag user.get_profile_image("100x100") %></td>
-        <td> <span><%= user.name %></span> </td>
-         <td> <span> <%= link_to 'Show', user_path(user)  %>  </span> </td>
-
-    </tr>
-  </tbody>
-</table>
-<% end %>
